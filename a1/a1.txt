@@ -1,0 +1,87 @@
+===========================================
+DS221: INTRODUCTION TO SCALABLE SYSTEMS
+===========================================
+ASSIGNMENT 1
+POINTS: 150
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-----------------------
+PART A
+POSTED: 19 NOV, 2020
+DUE DATE: 6 DEC, 2020, 11:59PM
+-----------------------
+
+------------------------------------------------------------
+Q1: Expression Evaluation using Trees and Stacks [90 points]
+------------------------------------------------------------
+
+You are given a mathematical expression as a string that is read from console input. The expression will be composed of four binary operators + - * / and non-negative integers as operands. Each sub-expression formed from a operator will be enclosed within parenthesis, i.e., (L op R) where L is the left operand, op is the operator and R is the right operand. There may be zero or more spaces between the operators, operands and parenthesis. [90 points]
+
+a) Use a C++ STL stack data structure to verify if the given expression is valid. You should print the output "A1a:true" or "A1a:false" accordingly. [20 points]
+
+b) Define a Tree data structure in C++ by implementing the virtual functions defined in the abstract class Node.h provided to you. 
+Build an expression tree using the given input expression. The root must be an operator, its left and right subtrees must be its sub-expression, internal nodes should be operators and leaves must be integer operands. Parenthesis must not be placed in the node. 
+Perform a pre-order traversal of the expression tree and print it to the console output as "A1b:op L R ...". A space must separate the operators and operands. Do not print parentheses. [30 points]
+
+c) Evaluate the expression tree you have constructed using an STL stack data structure. You should use default C++ integer-based arithmetic in all steps of your evaluation (i.e., NOT float or double). You should print the result of the expression tree as: "A1c:123456" where 123456 is the output of evaluating the expression. [40 points]
+
+Your main main C++ file should be in ExprTree.cpp and the generated executable should be named ExprTree. A sample outline for ExprTree.cpp is provided.
+
+
+--------------------------------------
+Q2: Searching using Arrays [60 points + 20 points extra credit]
+--------------------------------------
+
+You are given a "numbers" input file with n+1 rows. The first line has a non-negative integer that indicates a count of the input numbers in the file 'n' and the remaining 'n' rows have an input integer each. Write C++ code to compactly insert these numbers into a binary tree implemented as an array.
+
+a) You are given a "query" file with m+1 numbers, one per line. The first line has a non-negative integer that indicates a count of the numbers in the file 'm' and remaining 'm' rows have a query integer each. Write an efficient C++ code to search for each number in this query file within the binary tree by performing:
+	(i) an in-order traversal, and 
+	(ii) a level-order traversal. 
+Measure the time taken to complete the search for all queried numbers using each strategy. Print to console output "A2a:123,456,789" where 123<=m is a count of the queried numbers that were successfully found in the tree, 456 is the total time taken in milliseconds to complete all searches using in-order traversal, and 789 is the total time taken in milliseconds to complete all searches using level-order traversal. [30 points]
+
+b) For at least 3 different sizes of the input numbers.txt file, estimate the space taken by the array and the time taken by the two search strategies. Compare these with the expected space and time complexities complexity. Provide a report with plots, comparisons and analysis of the observations. Explain any outliers. [30 points]
+
+c) [EXTRA CREDIT: 20 points] Optionally, sort and store the input numbers in a sorted array. You may use the sort() function over arrays in C++ STL. Perform a binary search over this sorted array for the input queries. Print your output as "A2c:345", where 345 is the total time taken for the binary search of all numbers to complete. Include an analysis of these results in your report.
+
+Your main program should be in the TreeSearch.cpp file and the commandline parameters should be "TreeSearch <numbersFileName> <queryFileName>", e.g. TreeSearch numbers.txt query.txt
+
+
+-----------------------
+Submission Instructions
+-----------------------
+1) Code outline for Node.h, ExprTree.cpp, TreeSearch.h and TreeSearch.cpp are provided. You can make changes to the cpp files. Make sure your code is well documented. Maintain good coding practices (indenting, comments, validations, etc.)
+
+2) 3 test cases (expr1.txt, num1.txt, query1.txt, ...) will be given. These test cases will be different from the ones which will be used while correcting your assignments and you are expected to run your code on other sample data of your own.
+
+3) Evaluation of the code will be done using automated scripts. This means you MUST follow instructions for compilation using Makefile, input format and console output format. If the automated compilation/evaluation fail, your assignment will not be evaluated.
+
+4) You should compile the code using the given Makefiles for each part of the assignment. Do not change the Makefiles. We will compile your submission from source. But you are also required to submit the compiled binary file.
+
+5) Follow the input signature accurately:
+	./ExprTree < "expression file"
+	e.g., ./ExprTree < expr1.txt
+	
+	./TreeSearch "numbersFileName" "queryFileName"
+	e.g., ./TreeSearch num1.txt query1.txt
+
+6) Follow the console output format accurately as listed in the problem. You MUST NOT print anything else to the console output other than what is listed in the question. 
+
+7) Your solution should have the following folder structure and these exact file names. Nothing more, nothing less. Replace cdsstudent with your IISc email handle.
+cdsstudent-a1/
+	cdsstudent-a1.pdf
+	q1/
+		makefile
+		Node.h
+		ExprTree.cpp
+		ExprTree
+	q2/
+		makefile
+		TreeSearch.h
+		TreeSearch.cpp
+		TreeSearch
+
+8) Submission instructions using GitHub to follow. 
+
+9) NOTE: Do not host your solutions on your GitHub public repository or any public online repository. Any student found posting their solutions in a public repository will get zero points for this assignment, besides other penalties. 
+
+10 NOTE: Do not review or use any online code when developing your solution. You may refer to generic algorithmic techniques or documentation on using C++ STL and API.
