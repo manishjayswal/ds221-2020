@@ -2,48 +2,86 @@
 #include <stack>
 #include <string>
 #include <cstddef>
-#include "Node.h"
+#include <limits>
 
 using namespace std;
 
+
 /**
- * Class extends the Node class to implement the functions
+ * Class containing the data for a single node in an expression tree
+ * 
+ * @param type - stores the type of the node, it can either be {0 : (operator), 1: (operand)}
+ * @param operator_ - stores the operator, values can be {+, -, *, /}. Present only if type is 0
+ * @param operand_ - stores the operand, the value is a non-negetive integers. Present only if type is 1
+ * @param left - link to the left child of the node
+ * @param right - link to the right child of the node
 */
-class TreeNode : public Node {
+class ExprNode {
+private:
+	int type;
+	char operator_;
+	unsigned int operand_;
+	ExprNode *left, *right;
+
+public:
+	/* Constructor definitions */
+	ExprNode(unsigned int operand) {
+		type = 1;
+		operand_ = operand;
+		operator_ = 0;
+		left = NULL;
+		right = NULL;
+	}
+
+	ExprNode(char op) {
+		if (op == '+' || op == '-' || op == '*' || op == '/') {
+			type = 0;
+			operator_ = op;
+			left = NULL;
+			right = NULL;
+		} else {
+			throw invalid_argument("Invalid operator");
+		}
+	}
+
 public:
 	/* validates an operator */
 	bool isOperator() {
-		/* TODO: Implement your logic here */
+		/* Implement your logic here */
 	}
 
 	/* get operator value */
 	char getOperator() {
-		/* TODO: Implement your logic here */
+		/* Implement your logic here */
 	}
 
 	/* get operand value */
 	unsigned int getOperand() {
-		/* TODO: Implement your logic here */
+		/* Implement your logic here */
 	}
 
 	/* get left child */
-	Node *getLeft() {
-		/* TODO: Implement your logic here */
+	ExprNode* getLeft() {
+		/* Implement your logic here */
+		return left;
 	}
 
 	/* get right child */
-	Node *getRight() {
-		/* TODO: Implement your logic here */
+	ExprNode* getRight() {
+		/* Implement your logic here */
+		return right;
 	}
 
 	/* set left child */
-	void setLeft(Node *left) {
-		/* TODO: Implement your logic here */
+	void setLeft(ExprNode* left) {
+		/* Implement your logic here */
+		this->left =left;
 	}
 
 	/* set right child */
-	void setRight(Node *right) {
-		/* TODO: Implement your logic here */
+	void setRight(ExprNode* right) {
+		/* Implement your logic here */
+		this->right = right;
 	}
 };
 
@@ -51,12 +89,12 @@ public:
  * Function to construct infix tree from expression
  * 
  * @param exp - string expression for which tree is to be constructed
- * @return node - returns root to infix expression tree
+ * @return node - returns 
 */
-Node *buildInfixTree(string exp) {
-	Node *root = NULL;
+ExprNode* buildInfixTree(string exp) {
+	ExprNode* root;
 
-	/* TODO: Implement your logic here */
+	/* Implement your logic here */
 
 	return root;
 }
@@ -65,12 +103,12 @@ Node *buildInfixTree(string exp) {
  * Function to print pre order traversal for infix expression tree
  * 
  * @param root - reference to the root of the infix tree
- * @returns - resultant expression string after pre order traversal
+ * @returns - resultant expression after pre order traversal
 */
-string doPreOrder(Node *root) {
+string printPreOrderTraversal(ExprNode* root) {
 	string result;
 
-	/* TODO: Implement your logic here */
+	/* Implement your logic here */
 
 	return result;
 }
@@ -81,13 +119,16 @@ string doPreOrder(Node *root) {
  * @param root - reference to the root of the infix tree
  * @returns - result after expression is evaluated
 */
-int evaluate(Node *root) {
+int evaluate(ExprNode* root) {
 	int result;
-	stack<Node *> st;
 
-	/* TODO: Implement your logic here */
+	/* Implement your logic here */
 
 	return result;
+}
+
+int getIntMin() {
+	return numeric_limits<int>::min();
 }
 
 /**
@@ -95,23 +136,23 @@ int evaluate(Node *root) {
  * expression is a valid mathematical expression
  * 
  * @param exp - expression string to be validated
- * @returns - true if the expression is valid, false otherwise
 */
 bool isValid(string exp) {
+	/* Initialising stack */
 	stack<char> st;
 	bool result;
 
-	/* TODO: Implement your logic here */
+	/* Implement your logic here */
 
 	return result;
 }
 
 /**
  * Function to print output to console
- * @param result - result from evaluating validity if expression
+ * @param result - result from the function
  */
 void printResultA(bool result) {
-	cout << "A1a:" << (result ? "true" : "false") << endl;
+	cout << "Q1a:" << (result ? "true" : "false") << endl;
 }
 
 /**
@@ -119,7 +160,7 @@ void printResultA(bool result) {
  * @param result - expression from the pre order traversal
  */
 void printResultB(string result) {
-	cout << "A1b:" << result << endl;
+	cout << "Q1b:" << result << endl;
 }
 
 /**
@@ -127,7 +168,7 @@ void printResultB(string result) {
  * @param result - result after evaluation of expression
  */
 void printResultC(int result) {
-	cout << "A1c:" << result << endl;
+	cout << "Q1c:" << result << endl;
 }
 
 int main() {
@@ -135,8 +176,8 @@ int main() {
 	string exp;
 
 	/* Input taken from console */
-	//cout << "Enter expression: ";
-	cin >> exp;
+	cout << "Enter expression: ";
+	getline(cin, exp);
 
 	/**
      * QUESTION 1 - PART A
@@ -159,16 +200,15 @@ int main() {
      * Root : must be an operator
      * Left-subtree: sub expression
      * Right-subtree: sub expression
-	 * Internak nodes: operators
      * Leaves: integer operands
      * 
     */
 
 	/* Construct infix expression tree */
-	Node *root = buildInfixTree(exp);
+	ExprNode *root = buildInfixTree(exp);
 
 	/* Print pre order traversal */
-	string preOrderResult = doPreOrdert(root);
+	string preOrderResult = printPreOrderTraversal(root);
 
 	/* Printing result to console */
 	printResultB(preOrderResult);

@@ -1,2 +1,2 @@
-ExprTree: ExprTree.cpp Node.h
-	g++ ExprTree.cpp Node.h -o ExprTree
+ExprTree: ExprTree.cpp
+	g++ ExprTree.cpp -o ExprTree
