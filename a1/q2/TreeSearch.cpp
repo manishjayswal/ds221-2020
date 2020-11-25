@@ -16,6 +16,7 @@ BinaryTree::BinaryTree(int size_){
 /**
  * Function to insert an element into the tree in level order
  * @param key - element to be inserted
+ * @return Success/failure status of the insert operation.
  */
 int BinaryTree::insert(int key){
     //TODO
@@ -25,6 +26,7 @@ int BinaryTree::insert(int key){
 /**
  * Function to find the key by performing a inorder order traversal of the tree
  * @param key - key to be searched for in the tree
+ * @return value - return then index of the key if found else return -1
  */
 int BinaryTree::findByInOrder(int key){
 	// TODO
@@ -33,6 +35,7 @@ int BinaryTree::findByInOrder(int key){
 /**
  * Function to find the key by performing a level order traversal of the tree
  * @param key - key to be searched for in the tree
+ * @return value - return then index of the key if found else return -1
  */
 int BinaryTree::findByLevelOrder(int key){
 	// TODO
@@ -42,6 +45,7 @@ int BinaryTree::findByLevelOrder(int key){
  * Optional: Extra Credit
  * Function to insert all elements as a sorted array
  * @param keys - elements to be inserted in sorted order
+ * @return Success/failure status of the insert operation.
  */
 int insertSorted(int* keys) {
 	// TODO: optional
@@ -51,6 +55,7 @@ int insertSorted(int* keys) {
  * Optional: Extra Credit
  * Function to find the key by performing a binary search over sorted array
  * @param key - key to be searched for in the sorted array
+ * @return Success/failure status of the search operation.
  */
 int BinaryTree::findByBinarySearch(int key){
 	// TODO: optional
@@ -66,11 +71,11 @@ int main(){
     // measure the total time taken to for all the number using inorder
 
 	// iterate and search for each query number using level-order traversal
-    // measure the total time taken to for all the number using inorder
+    // measure the total time taken to for all the number using level-order
 
 	
     // output in the format "A2a:123,456,789" where:
 	// 123<=m is the number matching query numbers found 
-    // 456 is the totoal time taken in milliseconds to complete the search using inorder traversal, and 
-	// 789 is the total time taken in milliseconds to complete this search using level-order traversal.
+    // 456 is the total time taken in nanoseconds to complete the search using inorder traversal, and 
+	// 789 is the total time taken in nanoseconds to complete this search using level-order traversal.
 }
