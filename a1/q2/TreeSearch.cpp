@@ -16,7 +16,7 @@ BinaryTree::BinaryTree(int size_){
 /**
  * Function to insert an element into the tree in level order
  * @param key - element to be inserted
- * @return Success/failure status of the insert operation.
+ * @return 0 if insert was success, -1 if it failed
  */
 int BinaryTree::insert(int key){
     //TODO
@@ -26,7 +26,7 @@ int BinaryTree::insert(int key){
 /**
  * Function to find the key by performing a inorder order traversal of the tree
  * @param key - key to be searched for in the tree
- * @return value - return then index of the key if found else return -1
+ * @return value - return then index of the key (starting at 1) if found else return -1
  */
 int BinaryTree::findByInOrder(int key){
 	// TODO
@@ -35,7 +35,7 @@ int BinaryTree::findByInOrder(int key){
 /**
  * Function to find the key by performing a level order traversal of the tree
  * @param key - key to be searched for in the tree
- * @return value - return then index of the key if found else return -1
+ * @return value - return then index of the key (starting at 1) if found else return -1
  */
 int BinaryTree::findByLevelOrder(int key){
 	// TODO
@@ -45,20 +45,20 @@ int BinaryTree::findByLevelOrder(int key){
  * Optional: Extra Credit
  * Function to insert all elements as a sorted array
  * @param keys - elements to be inserted in sorted order
- * @return Success/failure status of the insert operation.
+ * @return 0 if insert was success, -1 if it failed
  */
 int insertSorted(int* keys) {
-	// TODO: optional
+	// TODO: optional, extra credit
 }
 
 /**
  * Optional: Extra Credit
  * Function to find the key by performing a binary search over sorted array
  * @param key - key to be searched for in the sorted array
- * @return Success/failure status of the search operation.
+ * @return value - return then index of the key (starting at 1) if found else return -1
  */
 int BinaryTree::findByBinarySearch(int key){
-	// TODO: optional
+	// TODO: optional, extra credit
 }
 
 		
