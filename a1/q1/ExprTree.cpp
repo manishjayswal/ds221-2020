@@ -8,7 +8,7 @@ using namespace std;
 
 
 /**
- * Class containing the data for a single node in an expression tree
+ * Class containing the data and functions for a single node in an expression tree
  * 
  * @param type - stores the type of the node, it can either be {0 : (operator), 1: (operand)}
  * @param operator_ - stores the operator, values can be {+, -, *, /}. Present only if type is 0
@@ -63,25 +63,25 @@ public:
 	/* get left child */
 	ExprNode* getLeft() {
 		/* Implement your logic here */
-		return left;
+		
 	}
 
 	/* get right child */
 	ExprNode* getRight() {
 		/* Implement your logic here */
-		return right;
+		
 	}
 
 	/* set left child */
 	void setLeft(ExprNode* left) {
 		/* Implement your logic here */
-		this->left =left;
+		
 	}
 
 	/* set right child */
 	void setRight(ExprNode* right) {
 		/* Implement your logic here */
-		this->right = right;
+		
 	}
 };
 
@@ -89,7 +89,7 @@ public:
  * Function to construct infix tree from expression
  * 
  * @param exp - string expression for which tree is to be constructed
- * @return node - returns 
+ * @return node - returns root to infix expression tree
 */
 ExprNode* buildInfixTree(string exp) {
 	ExprNode* root;
@@ -103,9 +103,9 @@ ExprNode* buildInfixTree(string exp) {
  * Function to print pre order traversal for infix expression tree
  * 
  * @param root - reference to the root of the infix tree
- * @returns - resultant expression after pre order traversal
+ * @returns - resultant expression string after pre order traversal
 */
-string printPreOrderTraversal(ExprNode* root) {
+string doPreOrder(ExprNode* root) {
 	string result;
 
 	/* Implement your logic here */
@@ -136,9 +136,9 @@ int getIntMin() {
  * expression is a valid mathematical expression
  * 
  * @param exp - expression string to be validated
+ * @returns - true if the expression is valid, false otherwise
 */
-bool isValid(string exp) {
-	/* Initialising stack */
+bool isValid(string exp) {	
 	stack<char> st;
 	bool result;
 
@@ -149,10 +149,10 @@ bool isValid(string exp) {
 
 /**
  * Function to print output to console
- * @param result - result from the function
+ * @param result - result from evaluating validity of expression
  */
 void printResultA(bool result) {
-	cout << "Q1a:" << (result ? "true" : "false") << endl;
+	cout << "A1a:" << (result ? "true" : "false") << endl;
 }
 
 /**
@@ -160,7 +160,7 @@ void printResultA(bool result) {
  * @param result - expression from the pre order traversal
  */
 void printResultB(string result) {
-	cout << "Q1b:" << result << endl;
+	cout << "A1b:" << result << endl;
 }
 
 /**
@@ -168,7 +168,7 @@ void printResultB(string result) {
  * @param result - result after evaluation of expression
  */
 void printResultC(int result) {
-	cout << "Q1c:" << result << endl;
+	cout << "A1c:" << result << endl;
 }
 
 int main() {
@@ -176,7 +176,6 @@ int main() {
 	string exp;
 
 	/* Input taken from console */
-	cout << "Enter expression: ";
 	getline(cin, exp);
 
 	/**
@@ -208,7 +207,7 @@ int main() {
 	ExprNode *root = buildInfixTree(exp);
 
 	/* Print pre order traversal */
-	string preOrderResult = printPreOrderTraversal(root);
+	string preOrderResult = doPreOrder(root);
 
 	/* Printing result to console */
 	printResultB(preOrderResult);
