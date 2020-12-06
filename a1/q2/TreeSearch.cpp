@@ -3,6 +3,7 @@
 #include "TreeSearch.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 /**
@@ -11,6 +12,8 @@ using namespace std;
  */
 BinaryTree::BinaryTree(int size_){
     // TODO
+    size = size_ ;
+    treeArr = new int[size];
 }
 
 /**
@@ -18,10 +21,18 @@ BinaryTree::BinaryTree(int size_){
  * @param key - element to be inserted
  * @return 0 if insert was success, -1 if it failed
  */
+
 int BinaryTree::insert(int key){
     //TODO
-    
+    static int j=0;
+    if(treeArr[j] = key)
+    {
+        j++;
+        return 0;
+    }
+    return -1;
 }
+
 
 /**
  * Function to find the key by performing a inorder order traversal of the tree
@@ -39,6 +50,12 @@ int BinaryTree::findByInOrder(int key){
  */
 int BinaryTree::findByLevelOrder(int key){
 	// TODO
+    for(int i=0; i<size; i++)
+    {
+        if(key==treeArr[i])
+        return i;
+    }
+    return -1;
 }
 
 /**
@@ -64,14 +81,54 @@ int BinaryTree::findByBinarySearch(int key){
 		
 int main(){
     // read from input number and query files using the file name passed in as inputs
+    string numberFile, queryFile;
+    int n1, n2;
+    cout<<"\nEnter the input number file name: " << endl;
+    getline(cin,numberFile);
+    ifstream numFilePtr, queryFilePtr;
+    numFilePtr.open(numberFile);
+    numFilePtr >> n1;
+    int arr1[n1];
+    for (int i = 0; i<n1; i++)
+    {
+        numFilePtr >> arr1[i];
+    }
+    numFilePtr.close();
+
+    cout<<"\nEnter the query file name: ";
+    getline(cin,queryFile);
+    queryFilePtr.open(queryFile);
+    queryFilePtr >> n2;
+    int arr2[n2];
+    for(int i = 0; i<n2; i++)
+    {
+        queryFilePtr >> arr2[i];
+    }
+
+    queryFilePtr.close();
+    
 
     // insert each input number into the tree
+    BinaryTree bt1(n1);
+    for (int i = 0; i < n1; i++)
+    {
+        bt1.insert(arr1[i]);
+    }
 	
 	// iterate and search for each query number using inorder traversal
     // measure the total time taken to for all the number using inorder
 
 	// iterate and search for each query number using level-order traversal
     // measure the total time taken to for all the number using level-order
+    int count = 0;
+    
+    for (int i = 0; i < n2; i++)
+    {   
+        if (bt1.findByLevelOrder(arr2[i])==-1)
+        continue;
+        count++;
+    }
+    cout<<"\nA2a:"<<count<<","<< endl;
 
 	
     // output in the format "A2a:123,456,789" where:
