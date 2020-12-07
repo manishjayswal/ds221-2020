@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
+#include <algorithm>
 using namespace std;
 
 /**
@@ -14,6 +16,7 @@ BinaryTree::BinaryTree(int size_){
     // TODO
     size = size_ ;
     treeArr = new int[size];
+    sortedArr = new int[size];
 }
 
 /**
@@ -41,6 +44,10 @@ int BinaryTree::insert(int key){
  */
 int BinaryTree::findByInOrder(int key){
 	// TODO
+    for(int i=0;i<size;i++)
+    {
+        
+    }
 }
 
 /**
@@ -64,8 +71,9 @@ int BinaryTree::findByLevelOrder(int key){
  * @param keys - elements to be inserted in sorted order
  * @return 0 if insert was success, -1 if it failed
  */
-int insertSorted(int* keys) {
-	// TODO: optional, extra credit
+int BinaryTree::insertSorted(int* keys) {
+    sort(keys,keys+size);
+    sortedArr = keys;
 }
 
 /**
@@ -76,6 +84,19 @@ int insertSorted(int* keys) {
  */
 int BinaryTree::findByBinarySearch(int key){
 	// TODO: optional, extra credit
+    int left = 0;
+    int right = size-1;
+    int mid =  left+ (right-left)/2;
+    while(left<=right){
+        if(sortedArr[mid]==key)
+            return mid;
+        else if(sortedArr[mid]<key)
+            left = mid + 1;
+        else 
+            right = mid -1;
+        mid =  left+ (right-left)/2;
+    }
+    return -1;
 }
 
 		
@@ -104,7 +125,6 @@ int main(){
     {
         queryFilePtr >> arr2[i];
     }
-
     queryFilePtr.close();
     
 
@@ -120,19 +140,34 @@ int main(){
 
 	// iterate and search for each query number using level-order traversal
     // measure the total time taken to for all the number using level-order
-    int count = 0;
-    
+    int counter1 = 0;
+    auto start_time = chrono::steady_clock::now();
     for (int i = 0; i < n2; i++)
     {   
         if (bt1.findByLevelOrder(arr2[i])==-1)
         continue;
-        count++;
+        counter1++;
     }
-    cout<<"\nA2a:"<<count<<","<< endl;
-
-	
+    auto stop_time = chrono::steady_clock::now();
+    cout<<"A2a:"<<counter1<<","<<","<<chrono::duration_cast<chrono::nanoseconds>(stop_time-start_time).count()<< endl;
+    
     // output in the format "A2a:123,456,789" where:
 	// 123<=m is the number matching query numbers found 
     // 456 is the total time taken in nanoseconds to complete the search using inorder traversal, and 
 	// 789 is the total time taken in nanoseconds to complete this search using level-order traversal.
+
+    //inserting given elements in an sorted array
+    bt1.insertSorted(arr1);
+
+    //searching given query elements using binary search
+    auto start_time2 = chrono::steady_clock::now();
+        for(int i=0; i<n2; i++)
+    {   
+        if(bt1.findByBinarySearch(arr2[i])==-1)
+        continue;
+    }
+    auto stop_time2 = chrono::steady_clock::now();
+    cout<<"A2c:"<<chrono::duration_cast<chrono::nanoseconds>(stop_time2-start_time2).count()<<endl;
+
+    return 0;
 }
