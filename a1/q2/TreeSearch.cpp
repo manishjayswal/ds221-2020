@@ -35,7 +35,7 @@ int BinaryTree::insert(int key){
     }
     return -1;
 }
-
+  
 
 /**
  * Function to find the key by performing a inorder order traversal of the tree
@@ -44,10 +44,55 @@ int BinaryTree::insert(int key){
  */
 int BinaryTree::findByInOrder(int key){
 	// TODO
-    for(int i=0;i<size;i++)
-    {
+    stack<int> iStack;
+    int current=0;
+    //place index to a tree node on the stack before traversing the node's left subtree 
+    iStack.push(current);  
+    while (iStack.empty()==false) 
+    { 
+        //Reach the index of left most Node of the current Node 
+        while (2*current+1 < size) 
+        { 
+            current = 2*current + 1; // left child of node at index i is at 2*i+1 index
+            iStack.push(current); 
+        } 
+  
+        current = iStack.top(); 
+        iStack.pop(); 
+        if(treeArr[current]==key)
+            return current; 
+
+        if(iStack.empty()==false)
+        { 
+            current = iStack.top();
+            iStack.pop();
+            if(treeArr[current]==key)
+                return current; 
+            }
+        else
+        {
+            break;
+        }
         
+        current = 2*current + 2; 
+        if(current<size)
+            iStack.push(current);
+        else
+        {   if(iStack.empty()== true)
+                break;
+            else
+            {
+                current = iStack.top();
+                iStack.pop();
+                if(treeArr[current]==key)
+                    return current; 
+            
+                current = 2*current + 2;
+                iStack.push(current);
+            }          
+        }
     }
+    return -1;
 }
 
 /**
@@ -100,12 +145,12 @@ int BinaryTree::findByBinarySearch(int key){
 }
 
 		
-int main(){
+int main(int argc, char **argv){
     // read from input number and query files using the file name passed in as inputs
-    string numberFile, queryFile;
+    string numberFile(argv[1]);
+    string queryFile(argv[2]);
     int n1, n2;
-    cout<<"\nEnter the input number file name: " << endl;
-    getline(cin,numberFile);
+  //  getline(cin,numberFile);
     ifstream numFilePtr, queryFilePtr;
     numFilePtr.open(numberFile);
     numFilePtr >> n1;
@@ -116,8 +161,7 @@ int main(){
     }
     numFilePtr.close();
 
-    cout<<"\nEnter the query file name: ";
-    getline(cin,queryFile);
+   // getline(cin,queryFile);
     queryFilePtr.open(queryFile);
     queryFilePtr >> n2;
     int arr2[n2];
@@ -137,19 +181,29 @@ int main(){
 	
 	// iterate and search for each query number using inorder traversal
     // measure the total time taken to for all the number using inorder
+    int counter1 =0;
+    auto start_time1 = chrono::steady_clock::now();
+    for(int i = 0; i<n2; i++)
+    {
+        if(bt1.findByInOrder(arr2[i])==-1)
+            continue;
+        counter1++;
+    }
+    auto stop_time1 = chrono::steady_clock::now(); 
 
 	// iterate and search for each query number using level-order traversal
     // measure the total time taken to for all the number using level-order
-    int counter1 = 0;
-    auto start_time = chrono::steady_clock::now();
+    int counter2 = 0;
+    auto start_time2 = chrono::steady_clock::now();
     for (int i = 0; i < n2; i++)
     {   
         if (bt1.findByLevelOrder(arr2[i])==-1)
-        continue;
-        counter1++;
+           continue;
+        counter2++;
     }
-    auto stop_time = chrono::steady_clock::now();
-    cout<<"A2a:"<<counter1<<","<<","<<chrono::duration_cast<chrono::nanoseconds>(stop_time-start_time).count()<< endl;
+    auto stop_time2 = chrono::steady_clock::now();
+
+    cout<<"A2a:"<<counter1<<","<<chrono::duration_cast<chrono::nanoseconds>(stop_time1-start_time1).count()<<","<<chrono::duration_cast<chrono::nanoseconds>(stop_time2-start_time2).count()<< endl;
     
     // output in the format "A2a:123,456,789" where:
 	// 123<=m is the number matching query numbers found 
@@ -160,14 +214,14 @@ int main(){
     bt1.insertSorted(arr1);
 
     //searching given query elements using binary search
-    auto start_time2 = chrono::steady_clock::now();
+    auto start_time3 = chrono::steady_clock::now();
         for(int i=0; i<n2; i++)
     {   
         if(bt1.findByBinarySearch(arr2[i])==-1)
         continue;
     }
-    auto stop_time2 = chrono::steady_clock::now();
-    cout<<"A2c:"<<chrono::duration_cast<chrono::nanoseconds>(stop_time2-start_time2).count()<<endl;
+    auto stop_time3 = chrono::steady_clock::now();
+    cout<<"A2c:"<<chrono::duration_cast<chrono::nanoseconds>(stop_time3-start_time3).count()<<endl;
 
     return 0;
 }
