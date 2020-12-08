@@ -131,25 +131,6 @@ int getIntMin() {
 	return numeric_limits<int>::min();
 }
 
-//function to check whether a given character represents basic mathematical operator
-bool isOperator(char ch){
-    if(ch == '+' || ch =='-'||ch=='*'||ch =='/')
-        return true;
-    else
-        return false;    
-
-}
-
-//checks whether a character represents digit 0 t0 9 as per their ASCII value
-bool isOperand(char ch)
-{
-    if(ch>47 && ch<58)
-        return true;
-    else
-        return false;
-}
-
-
 /**
  * Checks whether a given 
  * expression is a valid mathematical expression
@@ -157,61 +138,14 @@ bool isOperand(char ch)
  * @param exp - expression string to be validated
  * @returns - true if the expression is valid, false otherwise
 */
-bool isValid(string expr)
-{
-    stack<char>st;
-    char ch;
-    ch = 'a';
-    for(int i = 0; i<expr.length();i++){
-        if(expr[i]==' ')
-            continue;
-        else if(expr[i]=='(')
-        {
-            st.push(expr[i]);
-        }
-        else if(isOperator(expr[i])==true)
-        {
-            if(st.empty()==false && !isOperator(st.top()) && st.top()!='(')
-            {
-                st.push(expr[i]);
-            }   
-            else
-            {
-                return false;
-            }
-            
-        }
-        else if(expr[i]==')')
-        {   if(st.empty()==true)
-                return false;
-            while(st.top()!='('){
-                st.pop();
-            } 
-            st.pop();
-            st.push(ch);
-        }
-        else
-        {
-            if(st.top()=='(' || isOperator(st.top()) || st.top()=='a')
-            {
-                st.push(ch);
-            }
-            else
-                return false;
-        }        
-    }
-    st.pop();
-    if(st.empty())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-    
-}
+bool isValid(string exp) {	
+	stack<char> st;
+	bool result;
 
+	/* Implement your logic here */
+
+	return result;
+}
 
 /**
  * Function to print output to console
