@@ -1,115 +1,142 @@
-#include <iostream>
-#include <stack>
-#include <string>
-#include <cstddef>
-#include <limits>
+// ExpreeTree.cpp
+#include <bits/stdc++.h> 
+using namespace std; 
 
-using namespace std;
-
+// Tree Structure 
+typedef struct node 
+{ 
+	char oprtr; 
+    unsigned int operand;
+	struct node *left, *right; 
+} * nptr; 
 
 /**
- * Class containing the data and functions for a single node in an expression tree
- * 
- * @param type - stores the type of the node, it can either be {0 : (operator), 1: (operand)}
- * @param operator_ - stores the operator, values can be {+, -, *, /}. Present only if type is 0
- * @param operand_ - stores the operand, the value is a non-negetive integers. Present only if type is 1
- * @param left - link to the left child of the node
- * @param right - link to the right child of the node
+ * Function to create new node for operator 
+ * @param ch - operator to initiaze the node's operator
+ * @returns - node pointer of new node
 */
-class ExprNode {
-private:
-	int type;
-	char operator_;
-	unsigned int operand_;
-	ExprNode *left, *right;
+nptr newNode(char ch) 
+{ 
+	nptr n = new node; 
+	n->oprtr = ch; 			
+	n->left = n->right = nullptr; 
+	return n; 
+} 
 
-public:
-	/* Constructor definitions */
-	ExprNode(unsigned int operand) {
-		type = 1;
-		operand_ = operand;
-		operator_ = 0;
-		left = NULL;
-		right = NULL;
-	}
+/**
+ * Function to create new node for operand
+ * @param num - operand to initiaze the node's operand
+ * @returns - node pointer of new node
+*/
+nptr newNode(unsigned int num) 
+{ 
+	nptr n = new node; 
+	n->operand = num; 
+	n->left = n->right = nullptr; 
+	return n; 
+} 
 
-	ExprNode(char op) {
-		if (op == '+' || op == '-' || op == '*' || op == '/') {
-			type = 0;
-			operator_ = op;
-			left = NULL;
-			right = NULL;
-		} else {
-			throw invalid_argument("Invalid operator");
+/**
+ * Function to build Expression Tree 
+ * @param s - mathematical expression for which infix tree is to be built
+ * @returns - node pointer to the root of the infix tree
+*/
+nptr buildInfixTree(string& s) 
+{	// Stack to hold nodes 
+	stack<nptr> nStack; 
+	// Stack to hold chars 
+	stack<char> cStack; 
+	nptr t, t1, t2; // temporary node pointers
+	for (int i = 0; i < s.length(); i++) 
+	{ 
+		if (s[i] == '(') { 
+
+			// Push '(' in char stack 
+			cStack.push(s[i]); 
+		} 
+		// Push the operands in node stack 
+		else if (isdigit(s[i])) 
+		{ 
+            unsigned int number = s[i] -'0';
+            i++;
+            while(isdigit(s[i])){
+                number = 10*number + s[i] -'0';
+                i++;
+            }
+            i--;
+            t = newNode(number); 
+			nStack.push(t); 
+		} 
+		// push operator into the stack character stack
+		else if (s[i]=='+' || s[i] == '-' || s[i] == '*' || s[i] =='/') 
+		{ 
+			cStack.push(s[i]); 
 		}
-	}
-
-public:
-	/* validates an operator */
-	bool isOperator() {
-		/* Implement your logic here */
-	}
-
-	/* get operator value */
-	char getOperator() {
-		/* Implement your logic here */
-	}
-
-	/* get operand value */
-	unsigned int getOperand() {
-		/* Implement your logic here */
-	}
-
-	/* get left child */
-	ExprNode* getLeft() {
-		/* Implement your logic here */
-		
-	}
-
-	/* get right child */
-	ExprNode* getRight() {
-		/* Implement your logic here */
-		
-	}
-
-	/* set left child */
-	void setLeft(ExprNode* left) {
-		/* Implement your logic here */
-		
-	}
-
-	/* set right child */
-	void setRight(ExprNode* right) {
-		/* Implement your logic here */
-		
-	}
-};
-
+ 
+		else if (s[i] == ')') { 
+			while (!cStack.empty() && cStack.top() != '(') 
+			{ 
+				t = newNode(cStack.top()); // node t's operator gets operator as top of character stack
+				cStack.pop(); 
+				t1 = nStack.top(); 	// t1 holds node from top of node stack
+				nStack.pop(); 		
+				t2 = nStack.top(); 	// t2 holds node from top of node stack
+				nStack.pop(); 		
+				t->left = t2; 		// node t's left pointer is pointed to node t2
+				t->right = t1; 		// node t's right pointer is pointed to node t1
+				nStack.push(t); 	// node pointer t is pushed to node stack
+			} 
+			cStack.pop(); 		// '(' from character stack is popped out
+		} 
+	} 
+	t = nStack.top(); // node pointer t now points to root of the tree 
+	return t; 
+} 
+ 
 /**
- * Function to construct infix tree from expression
- * 
- * @param exp - string expression for which tree is to be constructed
- * @return node - returns root to infix expression tree
+ * Function to perform preorder traversal of inorder tree
+ * @param root - node pointer to the root of the inorder tree
 */
-ExprNode* buildInfixTree(string exp) {
-	ExprNode* root;
-
+void doPreOrder(nptr root) {
 	/* Implement your logic here */
-
-	return root;
+	// if the node is a leaf node
+	if ((root->left)==nullptr && (root->right)==nullptr)
+	{
+		cout <<root->operand<<" "; // prints the operand
+	}
+	//if the node is a non-leaf node
+    else if(root) {
+		cout<< root->oprtr<<" "; // prints the operator
+		doPreOrder(root->left);
+		doPreOrder(root->right);
+    }
 }
 
 /**
- * Function to print pre order traversal for infix expression tree
- * 
- * @param root - reference to the root of the infix tree
- * @returns - resultant expression string after pre order traversal
+ * Function to compute the result of binary operation '+', '-','*' or '/'
+ * @param x, y, oprt - left side operand , y is rightside operand and optr is operator
+ * @returns - the result of binary operation
 */
-string doPreOrder(ExprNode* root) {
-	string result;
-
-	/* Implement your logic here */
-
+int compute(int x,int y, char optr)
+{
+	int result;
+	switch (optr)
+	{
+	case '+':
+		result = x + y;
+		break;
+	case '-':
+		result = x - y;
+		break;
+	case '*':
+		result = x * y;
+		break;
+	case '/':
+		result = x / y;
+		break;
+	default:
+		break;
+	}
 	return result;
 }
 
@@ -119,19 +146,32 @@ string doPreOrder(ExprNode* root) {
  * @param root - reference to the root of the infix tree
  * @returns - result after expression is evaluated
 */
-int evaluate(ExprNode* root) {
+int evaluate(nptr root) {
 	int result;
 
 	/* Implement your logic here */
-
+	if((root->left)==nullptr && (root->right)==nullptr)
+	{
+		result = root->operand;
+	}
+	else if(root)
+    {
+        result = compute(evaluate(root->left),evaluate(root->right),root->oprtr); 
+    } 
 	return result;
 }
+
 
 int getIntMin() {
 	return numeric_limits<int>::min();
 }
+ 
+/**
+ * Checks whether a given character is binary operator
+ * @param ch - character which is to be checked
+ * @returns - true if the character is binary operator, false otherwise
+*/
 
-//function to check whether a given character represents basic mathematical operator
 bool isOperator(char ch){
     if(ch == '+' || ch =='-'||ch=='*'||ch =='/')
         return true;
@@ -139,17 +179,6 @@ bool isOperator(char ch){
         return false;    
 
 }
-
-//checks whether a character represents digit 0 t0 9 as per their ASCII value
-bool isOperand(char ch)
-{
-    if(ch>47 && ch<58)
-        return true;
-    else
-        return false;
-}
-
-
 /**
  * Checks whether a given 
  * expression is a valid mathematical expression
@@ -212,8 +241,7 @@ bool isValid(string expr)
     
 }
 
-
-/**
+ /**
  * Function to print output to console
  * @param result - result from evaluating validity of expression
  */
@@ -225,8 +253,13 @@ void printResultA(bool result) {
  * Function to print output to console
  * @param result - expression from the pre order traversal
  */
-void printResultB(string result) {
-	cout << "A1b:" << result << endl;
+void printResultB(nptr root) {
+	
+    cout << "A1b:";
+
+	// /* perform & Print pre order traversal */
+    doPreOrder(root);
+    cout << endl;
 }
 
 /**
@@ -237,14 +270,13 @@ void printResultC(int result) {
 	cout << "A1c:" << result << endl;
 }
 
-int main() {
-	/* Expression string */
-	string exp;
-
-	/* Input taken from console */
-	getline(cin, exp);
-
-	/**
+int main() 
+{   /* Expression string */
+    string exp;
+   /* Input taken from console */
+	getline(cin,exp);
+ 
+    	/**
      * QUESTION 1 - PART A
      * 
      * Check if the given expression is a valid mathematical expression
@@ -256,7 +288,7 @@ int main() {
 	/* Printing result to console */
 	printResultA(check);
 
-	/**
+    /**
      * QUESTION 1 - PART B
      * 
      * Build an infix expession tree for the given expression and
@@ -269,26 +301,31 @@ int main() {
      * 
     */
 
-	/* Construct infix expression tree */
-	ExprNode *root = buildInfixTree(exp);
+   if(check)
+   {
+        /* Construct infix expression tree */
+        nptr root = buildInfixTree(exp);
 
-	/* Print pre order traversal */
-	string preOrderResult = doPreOrder(root);
+        // /* Printing result to console */
+        printResultB(root);
+      
+    // /**
+    //  * QUESTION 1 - PART C
+    //  * 
+    //  * Check if the given expression is a valid mathematical expression
+    // */
 
-	/* Printing result to console */
-	printResultB(preOrderResult);
-
-	/**
-     * QUESTION 1 - PART C
-     * 
-     * Check if the given expression is a valid mathematical expression
-    */
-
-	/* Evaluate infix expression tree */
+	// /* Evaluate infix expression tree */
 	int result = evaluate(root);
 
-	/* Printing result to console */
+	// /* Printing result to console */
 	printResultC(result);
+   }
+   else
+   {
+    cout << "A1b:NA"<<endl;
+    printResultC(getIntMin());
 
-	return 0;
+   }
+	return 0; 
 }

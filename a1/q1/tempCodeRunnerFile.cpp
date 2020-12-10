@@ -1,11 +1,1 @@
-
-    if(st.empty())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-    
-}
+(((10 - 5) + (20*3)) / 15)
